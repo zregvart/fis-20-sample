@@ -1,27 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <mirrors>
+    <mirror>
+      <!--This sends everything else to /public -->
+      <id>nexus</id>
+      <mirrorOf>*</mirrorOf>
+      <url>http://nexus-nexus.rhel-cdk.10.1.2.2.xip.io/repository/maven-public/</url>
+    </mirror>
+  </mirrors>
   <profiles>
     <profile>
-      <id>fis-20</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
+      <id>nexus</id>
+      <!--Enable snapshots for the built in central repo to direct -->
+      <!--all requests to nexus via the mirror -->
       <repositories>
         <repository>
-          <id>oc-nexus</id>
-          <name>OpenShift nexus</name>
-          <url>http://nexus-nexus.rhel-cdk.10.1.2.2.xip.io/</url>
+          <id>central</id>
+          <url>http://central</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
         </repository>
       </repositories>
       <pluginRepositories>
         <pluginRepository>
-          <id>oc-nexus</id>
-          <name>OpenShift nexus</name>
-          <url>http://nexus-nexus.rhel-cdk.10.1.2.2.xip.io/</url>
+          <id>central</id>
+          <url>http://central</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
         </pluginRepository>
       </pluginRepositories>
     </profile>
   </profiles>
+  <activeProfiles>
+    <!--make the profile active all the time -->
+    <activeProfile>nexus</activeProfile>
+  </activeProfiles>
 </settings>
-
